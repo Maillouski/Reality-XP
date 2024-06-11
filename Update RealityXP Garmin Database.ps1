@@ -1,5 +1,6 @@
 ﻿# EXECUTE THIS SCRIPT FROM THE SDCARD or USB DRIVE CONTAINING THE UPDATED DATABASES
 
+
 # Ask for the Garmin Trainer Database path or use the default
 $defaultGarminTrainerDB = "C:\ProgramData\Garmin\Trainers\Databases"
 $garminTrainerDB = Read-Host -Prompt "Enter the Garmin Trainer Database path (default: $defaultGarminTrainerDB)"
@@ -31,19 +32,19 @@ $safeTaxiDestination = Join-Path -Path $garminTrainerDB -ChildPath "safetaxi.bin
 
 # NAVIGATION DATABASE
 if (Test-Path $navDbSourceAviation) {
-    Copy-Item -Path $navDbSource -Destination $navDbDestination1 -Force
-    Copy-Item -Path $navDbSource -Destination $navDbDestination2 -Force
+    Copy-Item -Path $navDbSourceAviation -Destination $navDbDestination1 -Force
+    Copy-Item -Path $navDbSourceAviation -Destination $navDbDestination2 -Force
     Write-Host "Aircraft Navigation database copied successfully."
 } else {
     Write-Host "Aircraft Navigation database file not found at $navDbSource."
 }
 
 if (Test-Path $navDbSourceHeli) {
-    Copy-Item -Path $navDbSource -Destination $navDbDestination3 -Force
-    Copy-Item -Path $navDbSource -Destination $navDbDestination4 -Force
+    Copy-Item -Path $navDbSourceHeli -Destination $navDbDestination3 -Force
+    Copy-Item -Path $navDbSourceHeli -Destination $navDbDestination4 -Force
     Write-Host "Helicopter Navigation database copied successfully."
 } else {
-    Write-Host "Helicopter Navigation database file not found at $navDbSource."
+    Write-Host "Helicopter Navigation database file not found at $navDbSourceHeli."
 }
 
 # OBST/HOT
