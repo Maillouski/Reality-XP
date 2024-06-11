@@ -13,20 +13,37 @@ do {
 } while (-not (Test-Path $garminCard))
 
 # Ensure paths are correct
-$navDbSource = Join-Path -Path $garminCard -ChildPath "ldr_sys\nav_db2.bin"
+$navDbSourceAviation = Join-Path -Path $garminCard -ChildPath "ldr_sys\nav_db2.bin"
+$navDbSourceHeli = Join-Path -Path $garminCard -ChildPath "ldr_sys\nav_heli_db2.bin"
 $terrainOdbSource = Join-Path -Path $garminCard -ChildPath "terrain.odb"
 $safeTaxiSource = Join-Path -Path $garminCard -ChildPath "safetaxi.bin"
 
-$navDbDestination = Join-Path -Path $garminTrainerDB -ChildPath "nav_db2.bin"
+#Airplane Database
+$navDbDestination1 = Join-Path -Path $garminTrainerDB -ChildPath "nav_db2.bin"
+$navDbDestination2 = Join-Path -Path $garminTrainerDB -ChildPath "nav_db2_grm.bin"
+
+#Helicopter Database
+$navDbDestination3 = Join-Path -Path $garminTrainerDB -ChildPath "nav_heli_db2.bin"
+$navDbDestination3 = Join-Path -Path $garminTrainerDB -ChildPath "nav_heli_db2_grm.bin"
+
 $terrainOdbDestination = Join-Path -Path $garminTrainerDB -ChildPath "terrain.odb2"
 $safeTaxiDestination = Join-Path -Path $garminTrainerDB -ChildPath "safetaxi.bin"
 
 # NAVIGATION DATABASE
-if (Test-Path $navDbSource) {
-    Copy-Item -Path $navDbSource -Destination $navDbDestination -Force
-    Write-Host "Navigation database copied successfully."
+if (Test-Path $navDbSourceAviation) {
+    Copy-Item -Path $navDbSource -Destination $navDbDestination1 -Force
+    Copy-Item -Path $navDbSource -Destination $navDbDestination2 -Force
+    Write-Host "Aircraft Navigation database copied successfully."
 } else {
-    Write-Host "Navigation database file not found at $navDbSource."
+    Write-Host "Aircraft Navigation database file not found at $navDbSource."
+}
+
+if (Test-Path $navDbSourceHeli) {
+    Copy-Item -Path $navDbSource -Destination $navDbDestination3 -Force
+    Copy-Item -Path $navDbSource -Destination $navDbDestination4 -Force
+    Write-Host "Helicopter Navigation database copied successfully."
+} else {
+    Write-Host "Helicopter Navigation database file not found at $navDbSource."
 }
 
 # OBST/HOT
